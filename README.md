@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# Suspense API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This file contains all the changes as per the task set out i.e: 
+to discover the 3 core issues in the snippet shared while using Suspense.
+ 
+The 3 issues are as follows:
+1. Use of Suspense **WITHOUT** a fallback in the following highlighted section.
+```
+    return (
+    <Suspense> <---- FALLBACK MISSING
+      <UserProfile data={data} />
+    </Suspense>
+  );
+```
+  
+2. Utilizing a **fetch-on-render** implementation as is in the useEffect block of the initial code. The recommendation behind Suspense as an API is to **start fetching** as early as possible or a **render-as-you-fetch** implementation to avert the common waterfall problem associated with the former implementation. This is done on line 39 below.
 
-## Available Scripts
+  ```
+    useEffect(() => {
+    fetchUserProfile(userId).then((profile) => setData(profile));
+  }, [userId, setData])
+  
+ ```
+  
+3. Suspense by definition is a **mechanism for data fetching libraries**. As such the previous implementation needed to also take that into account and implement a pattern as on line 44 or referencing the helpers.js file in this gist. This allows the code to hook into the data fetching element of Suspense and really implement the required changes to align with the API recommendation.
 
-In the project directory, you can run:
+4. Another recommendation would be to use the new `SuspenseList` component from the same API. It portends a great future but is  experimental at the moment.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
